@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: {
-    main: './src_tree/index.js'
+    main: './src_code_splitting/index.js'
   },
   module: {
     rules: [
@@ -55,12 +55,19 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src_tree/index.html'
+      template: 'src_code_splitting/index.html'
     }),
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['dist'],{
+      root: path.resolve(__dirname, '../')
+    }),
   ],
+  optimization:{
+    splitChunks:{
+      chunks:'all'
+    }
+  },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, '../dist')
   },
 }

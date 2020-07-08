@@ -84,3 +84,13 @@
 > 这个时候分别将dev/pro的文件与base文件进行合并输出配置：需要安装第三方模块：`webpack-merge` (此文默认安装的时候最新版本是5.0.8,使用merge报错，然后回退使用4.2.2版本)   
 > 最后分别在dev和prod中引入webpack-merge,通过`module.exports = merge(baseConfig, fileConfig)`即可。  
 
+#### webpack和Code Splitting(代码分割)
+> + 这里的代码分割是指对代码进行分割，提高代码执行效率与性能。    
+
+> Demo:
+> + 安装第三方包：lodash(提供了一些工具方法)。      
+> + 比如通过entry，将lodash打包成一个文件，业务代码打成一个文件。   
+
+> webpack4可以自动的帮帮我们做代码分割：  
+> 在webpack.base.js中配置 optimization:{splitChunks:{chunks:'all'}},此时在开发环境下打包，会看到有一个新的打包文件：vendors~main.js.    
+> 

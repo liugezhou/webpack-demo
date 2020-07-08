@@ -7,9 +7,7 @@
   "scripts": {
     "dev": "webpack-dev-server --config ./build/webpack.dev.js",
     "build": "webpack --config ./build/webpack.prod.js",
-    "bundle": "webpack --config ./build/webpack.config.js",
-    "watch": "webpack --watch",
-    "middleware": "node server.js"
+    "dev-build": "webpack --config ./build/webpack.dev.js"
   },
   "keywords": [],
   "author": "liugezhou",
@@ -41,6 +39,7 @@
     "@babel/polyfill": "^7.10.4",
     "@babel/runtime": "^7.10.4",
     "@babel/runtime-corejs2": "^7.10.4",
+    "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
