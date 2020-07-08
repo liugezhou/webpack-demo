@@ -62,8 +62,26 @@ module.exports = {
     }),
   ],
   optimization:{
-    splitChunks:{
-      chunks:'all'
+    splitChunks: {
+      chunks: 'all',
+      minSize: 0,
+      // minRemainingSize: 0,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name:true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
     }
   },
   output: {

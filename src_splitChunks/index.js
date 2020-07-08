@@ -1,3 +1,5 @@
+import test from './test'
+console.log(test.name)
 function getComponent(){
   // 异步加载lodash库
   return import('lodash').then( ({default :_} ) => {
