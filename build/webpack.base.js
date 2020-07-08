@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: {
-    main: './src_code_splitting/index.js'
+    main: './src_splitChunks/index.js'
   },
   module: {
     rules: [
@@ -55,7 +55,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src_code_splitting/index.html'
+      template: 'index.html'
     }),
     new CleanWebpackPlugin(['dist'],{
       root: path.resolve(__dirname, '../')
