@@ -3,4 +3,4 @@
 
 import {  add } from './math';
 
-add(1,2);
+add(222,2);

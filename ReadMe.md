@@ -56,8 +56,31 @@
 ```
 
 #### Tree Shaking
-> + Tree Shaking在webpack2.0之后引入：在math.js中有两个方法add 和minu，在index中只调用add方法，去打包的时候，会将math中的两个方法均打包，这样做是没有必要，且会使得打包文件变大，Tree Shaking就是为了解决这个问题的。     
-> + Tree Shaking只支持ES Module(即import)。 
-> + mode为development,默认没有Tree Shaking功能。配置的话需要在配置文件中添加 `optimization:{usedExports:true},` ，并且如果直接引入第三方资源，如果也不想做Tree Shaking，需要在package.json中配置（比如业务代码中使用了polyfill，添加： "sideEffects":["@babel/polyfill"],以忽略Tree Shaking对其作用）   
-> + 在我们math这个例子中，并未用到polyfill  所以可以直接在package.json中配置： "sideEffects":false  
->
+> + Tree Shaking在webpack2.0之后引入。  
+> + 在math.js这个模块中有两个方法add 和minu，在index中只调用add方法，去打包的时候，会将math中的两个方法均打包，这样做是没有必要，且会使得打包文件变大，Tree Shaking就是为了解决这个问题的。     
+> + Tree Shaking只支持ES Module(即import这种模块引入，require这种的不支持)。 
+
+>  mode为development环境：  
+> + 默认没有Tree Shaking功能。配置的话需要在配置文件中添加 `optimization:{usedExports:true},` ，并且如果直接引入第三方资源，如果也不想做Tree Shaking，需要在package.json中配置（比如业务代码中使用了polyfill，添加： "sideEffects":["@babel/polyfill"],以忽略Tree Shaking对其作用）   
+> + 在我们math这个例子中，并未用到polyfill , 我们继续在package.json中配置： "sideEffects":false   
+> + 这个时候我们用webpack打包，发现打包文件中，minu这个方法也被打包保留了下来，但是文件中有提示，告知我们只要add方法使用了。之所以有代码的保留是因为在开发环境下我们会调试代码，为了使得行行对应。  
+
+> mode为production环境时：  
+> + Tree-Shaking才算真正生效。  
+> + 在production环境下，Tree-Shaking默认已经配置好了，在webpack的配置文件下不需要对`optimization`配置。     
+> + 但是仍然需要对package.json中的sideEffects进行配置。   
+> +  使用webpack打包会发现生成一个.map的映射文件，且打包文件被压缩，注释去掉、minu有关的代码也剔除掉了。    
+
+
+#### Development和Production模式的区分打包
+>  通过前面的学习，我们知道在开发环境与生产环境下，打包方式是有区别。 
+>  为了提高在不同开发模式下进行打包的效率，我们分别新建两个文件:webpack.dev.js和webpack.prod.js。这两个文件分别代码不同环境下的webpack配置。     
+> 然后在package.json文件中的script标签页配置两个命令即可：  
+> 'dev':'webpack-dev-server --config webpack-dev.js'    
+> 'build':'webpack --config webpack.prod.js'    
+
+> 到这里我们又发现一个问题，dev与prod的配置文件有特别多相同的代码，我们继续优化：    
+> 根目录下新建webpack.base.js,将dev与prod相同的代码摘出来放到base中去。      
+> 这个时候分别将dev/pro的文件与base文件进行合并输出配置：需要安装第三方模块：`webpack-merge` (此文默认安装的时候最新版本是5.0.8,使用merge报错，然后回退使用4.2.2版本)   
+> 最后分别在dev和prod中引入webpack-merge,通过`module.exports = merge(baseConfig, fileConfig)`即可。  
+
