@@ -96,4 +96,20 @@
 > + 第一种同步代码：在webpack.base.js中配置 optimization:{splitChunks:{chunks:'all'}},此时在开发环境下打包，会看到有一个新的打包文件：vendors~main.js.    
 > + 第二种异步代码：异步加载第三方资源(import异步引入)，无需做任何配置，webpack会自动帮我们进行代码的分割。
 
-#### 
+#### Lazy Loading懒加载，Chunk是什么？
+> 懒加载是通过import异步加载一个模块，在执行的时候，再去引入。  
+> 路由懒加载等提升页面加载效率。  
+> 业务代码引入第三方资源的懒加载可以通过async、await。    
+
+> chunk指的是整个项目完成打包后，dist下面有几个js文件就是指几个chunk。
+
+#### CSS文件的代码分割
+> webpack配置文件中的output有两个属性：fileName和chunkFilename，这两个的区别是：  
+> 
+> CSS文件代码分割要使用在生产环境中。   
+> 需要安装`mini-css-extract-plugin`插件。 
+> 使用`optimize-css-assets-webpack-plugin`这个插件可以对代码进行合并和压缩。
+
+#### shimming
+> 
+

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: {
-    main: './src_splitChunks/index.js'
+    main: './src_css/index.js'
   },
   module: {
     rules: [
@@ -12,6 +12,7 @@ module.exports = {
         use: {
           loader: 'url-loader',
           options: {
+            // placeholder 占位符
             name: '[name].[ext]',
             outputPath: 'images/',
             limit: 10000
@@ -24,28 +25,7 @@ module.exports = {
           loader: 'file-loader'
         }
       },
-      {
-        test: /\.scss$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 2
-            }
-          },
-          'sass-loader',
-          'postcss-loader'
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
-        ]
-      },
+     
       { 
         test: /\.js$/, 
         exclude: /node_modules/, 
@@ -62,30 +42,14 @@ module.exports = {
     }),
   ],
   optimization:{
+    usedExports:true,  //tree-shading使用
     splitChunks: {
-      chunks: 'all',
-      minSize: 0,
-      // minRemainingSize: 0,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      name:true,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
+      chunks: 'all'
     }
   },
   output: {
     filename: '[name].js',
+    chunkFilename:'[name].chunk.js',
     path: path.resolve(__dirname, '../dist')
   },
 }
