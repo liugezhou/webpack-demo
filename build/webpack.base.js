@@ -1,9 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
 module.exports = {
   entry: {
-    main: './src_css/index.js'
+    main: './src_shimming/index.js'
   },
   module: {
     rules: [
@@ -25,11 +26,13 @@ module.exports = {
           loader: 'file-loader'
         }
       },
-     
       { 
         test: /\.js$/, 
         exclude: /node_modules/, 
-        loader: 'babel-loader'
+        use:[{
+          loader:'babel-loader'
+        }
+        ]
       }
     ]
   },
@@ -40,6 +43,10 @@ module.exports = {
     new CleanWebpackPlugin(['dist'],{
       root: path.resolve(__dirname, '../')
     }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      _:'lodash'
+    })
   ],
   optimization:{
     usedExports:true,  //tree-shading使用

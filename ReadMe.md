@@ -111,5 +111,12 @@
 > 使用`optimize-css-assets-webpack-plugin`这个插件可以对代码进行合并和压缩。
 
 #### shimming
-> 
+> 代码或者打包过程的兼容性问题。    
+>
+> webpack自带一个webpack.procidePlugin({})插件--垫片。    
+>
+> 如果想让每一个js文件的this指向window，安装`imports-loader`。  
+> 对webpack.base.js做一些配置。
 
+#### Library打包
+> 

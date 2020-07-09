@@ -41,6 +41,8 @@ const devConfig = {
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
-  
+  optimization:{
+    usedExports:true  //tree-shading使用
+  },
 }
 module.exports = merge(baseConfig, devConfig);
