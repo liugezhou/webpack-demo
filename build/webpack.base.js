@@ -1,10 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
 module.exports = {
   entry: {
-    main: './src_shimming/index.js'
+    main: './src_pwa/index.js'
   },
   module: {
     rules: [
@@ -42,10 +41,6 @@ module.exports = {
     }),
     new CleanWebpackPlugin(['dist'],{
       root: path.resolve(__dirname, '../')
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      _:'lodash'
     })
   ],
   optimization:{

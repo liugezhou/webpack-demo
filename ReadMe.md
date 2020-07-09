@@ -119,4 +119,10 @@
 > 对webpack.base.js做一些配置。
 
 #### Library打包
-> 
+> 自己发布一个npm包，在配置好自己的项目包之后，在npm官方注册账号，npm login登录，npm publish即可
+
+#### Progessive Web Application - PWA
+> +  安装第三方插件：workbox-webpack-plugin。   
+> + 线上打包配置文件：添加plugin：new WorkboxPlugin.GenerateSW()。   
+> + 在业务代码中，应该serverWorker，就可以将页面缓存住了。  
+
