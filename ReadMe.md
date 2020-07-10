@@ -126,3 +126,9 @@
 > + 线上打包配置文件：添加plugin：new WorkboxPlugin.GenerateSW()。   
 > + 在业务代码中，应该serverWorker，就可以将页面缓存住了。  
 
+#### TypaScript的打包配置
+>  总结至：https://github.com/liugezhou/typescript_webpack
+
+#### 使用WebpackDevServer实现请求转发
+> 本节主要是对webpack的配置devServer属性中的proxy做了一个讲解，没啥内容。
+
