@@ -6,12 +6,13 @@ module.exports = {
   mode:'development',  
   entry:'./src_devserver/index.js',
   devtool:'cheap-module-eval-source-map',
-  devServer:{
+  devServer:{  // 开发环境有效
     contentBase:'./dist',
     open:true,
     port:8000,
     hot:true,
     hotOnly:true,
+    historyApiFallback: true, 
     proxy:{
       '/react/api':{
         target:'http://www.dell-lee.com',

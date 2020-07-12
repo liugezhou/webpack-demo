@@ -44,6 +44,9 @@ module.exports = {
     })
   ],
   optimization:{
+    runtiomeChunk:{
+      name:'runtime'
+    },
     usedExports:true,  //tree-shading使用
     splitChunks: {
       chunks: 'all'

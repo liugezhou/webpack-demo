@@ -132,3 +132,31 @@
 #### 使用WebpackDevServer实现请求转发
 > 本节主要是对webpack的配置devServer属性中的proxy做了一个讲解，没啥内容。
 
+#### WebpackDevServer解决单页面应用路由问题
+> devServer:historyApiFallback: true
+
+#### Eslint在Webpack中的配置
+> + npm i eslint -D   
+> + npx eslint --init   
+> + npm i babel-eslint -D
+
+#### 提升Webpack打包速度的方法
+> 1. 跟上技术的迭代：Npde、Npm、Yarn  
+> 2. 在尽可能少的模块上应用Loader (合理使用exclude和include)    
+> 3.  Plugin尽可能精简少用并确保可靠
+> 4.  resolve参数合理配置(如果想引入默认为js或者jsx的文件，在webpack配置文件中加`resolve:{extensions:['.js','jsx']}`)
+
+#### 如何编写一个loader
+> 借助loader处理引用的文件。    
+> [demo仓库源码](https://github.com/liugezhou/make-loader)
+
+#### 如何编写一个Plugin
+> 在打包的某个具体时刻做的操作(比如打包钱清空dist目录，打包完成的html自动生成等)      
+> [demo仓库源码](https://github.com/liugezhou/make-plugin)
+
+#### Bundler源码编写(模块分析)
+> [demo仓库源码](https://github.com/liugezhou/make-bundle)
+
+#### 通过CreateReactApp深入学习Webpack配置
+
+#### 通过VueCli3学习webpack配置
