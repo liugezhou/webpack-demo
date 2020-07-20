@@ -160,3 +160,19 @@
 #### 通过CreateReactApp深入学习Webpack配置
 
 #### 通过VueCli3学习webpack配置
+
+#### [常用的webpack插件](https://mp.weixin.qq.com/s/FPENfKo7mObEYcVP0wofRA)
+> + HotModuleReplacementPlugin:模块热更新插件(webpack自带)。   
+> + html-webpack-plugin:生成html文件。  
+> + clean-webpack-plugin:打包前清理上一次项目生成的bundle文件。 
+> + extract-text-webpack-plugin:将CSS生成文件，而非内联。
+> + mini-css-extract-plugin:将CSS提取为独立的文件的插件。 
+> + purifycss-webpack:有时候我们css写多了或者重复了，这就造成了多余的代码，我们希望在生产环境下去除。 
+> + optimize-css-assets-webpack-plugin:我们希望减小css打包后的体积，可以用到此插件。  
+> + uglifyjs-webpack-plugin:是vue-cli默认使用的压缩代码方式，用来对js文件进行压缩，从而减少js文件的大小，加速load速度。 
+> + terser-webpack-plugin:Webpack4.0默认是使用terser-webpack-plugin这个压缩插件，在此之前是使用uglifyjs-webpack-plugin，这两者的区别是后者对ES6的压缩不是很友好。 
+> + webpack.NoEmitOnErrorsPlugin():报错但不退出webpack进程。  
+> + compression-webpack-plugin:所有现代浏览器都支持gzip压缩，启用 gzip 压缩可大幅缩减传输资源大小，从而缩短资源下载时间，减少首次白屏时间，提升用户体验。(这个方法还需要后端配置支持) 
+> + webpack.DefinePlugin:定义一些全局变量，在模块中直接使用这些变量，无需作任何声明。 
+> + webpack.ProvidePlugin:自动加载模块。  
+> + copy-webpack-plugin:我们在public/index.html中引入了其他的静态资源(js、png、css等)，在打包的时候webpack并不会帮我们拷贝到dist目录，因此copy-webpack-plugin可以很友好地帮我们做拷贝工作。 
