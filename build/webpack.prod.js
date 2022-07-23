@@ -5,7 +5,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const prodConfig = {
   mode: 'production',
-  devtool: 'cheap-module-source-map',
+  // devtool: 'cheap-module-source-map',
   module:{
     rules:[
       {

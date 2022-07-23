@@ -1,12 +1,16 @@
-import style from './index.scss';
-import avatar from './img.png';
+import style from './index.scss'
+import avatar from './img.png'
 
 import createAvatar from './createAvatar'
-createAvatar();
+let root = document.getElementById('root')
+import './index.scss'
 
-let img = document.createElement('img');
-img.src = avatar;
-img.classList.add(style.avatar);
+root.innerHTML = '<div class="iconfont icon-icon-trash"></div>'
 
-let root = document.getElementById('root');
-root.appendChild(img);
+createAvatar()
+
+let img = document.createElement('img')
+img.src = avatar
+img.classList.add(style.avatar)
+
+root.appendChild(img)

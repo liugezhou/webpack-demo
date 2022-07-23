@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: {
-    main: './src/index.js'
+    main: './src_react/index.js'
   },
   module: {
     rules: [
@@ -28,10 +28,27 @@ module.exports = {
       { 
         test: /\.js$/, 
         exclude: /node_modules/, 
-        use:[{
-          loader:'babel-loader'
-        }
-        ]
+        loader: 'babel-loader'
+        // options:{
+        //   presets: [['@babel/preset-env',{
+        //     targets: {
+        //       "chrome": "67",
+        //     },
+        //     useBuiltIns:'usage'
+        //   }]]
+          // "plugins": [
+          //   [
+          //     "@babel/plugin-transform-runtime",
+          //     {
+          //       "absoluteRuntime": false,
+          //       "corejs": 2,
+          //       "helpers": true,
+          //       "regenerator": true,
+          //       "version": "7.0.0-beta.0"
+          //     }
+          //   ]
+          // ]
+        // }
       }
     ]
   },
