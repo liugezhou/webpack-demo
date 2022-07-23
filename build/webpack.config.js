@@ -65,7 +65,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 2
+              importLoaders: 2 //通过import引入的scss文件，也会依次从下到上执行 loader流程
             }
           },
           'sass-loader',
@@ -98,6 +98,7 @@ module.exports = {
   //   usedExports:true
   // },
   output: {
+    publicPath:'/',
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   },

@@ -1,44 +1,133 @@
-#### 初识webpack
-> + webpack is a module bundler.    
-> + webpack核心定义是一个模块打包工具。   
-> + webpack module：ES Module、CommonJS、CMD、AMD 
+### 目录结构
+|-- CoolProject
+    |-- .babelrc                    
+    |-- .eslintrc.js
+    |-- .gitignore ----------------------- 忽略提交文件 
+    |-- index.html ----------------------- htmlWebpackPlugin使用
+    |-- package-lock.json ---------------- 版本固定
+    |-- package.json --------------------- 项目配置、依赖
+    |-- postcss.config.js ----------------- postcss配置，依赖autoprefixer
+    |-- readme.md ------------------------ 说明文档、知识点总结 
+    |-- server.js ------------------------- 手写devServer
+    |-- build
+    |   |-- webpack.base.js
+    |   |-- webpack.config.js --------------- 只是server.js使用的配置文件 
+    |   |-- webpack.dev.js ----------------  本地项目启动依赖配置
+    |   |-- webpack.devserver.js ----------- devServer配置文件测试(未引用)
+    |   |-- webpack.prod.js  --------------- 本地项目打包依赖配置
+    |-- src -------------------------------- 测试打包png scss 样式隔离
+    |   |-- createAvatar.js
+    |   |-- img.png
+    |   |-- index.js
+    |   |-- index.scss
+    |-- src3
+    |   |-- index.js
+    |-- src_HMR
+    |   |-- counter.js
+    |   |-- index.js
+    |   |-- number.js
+    |   |-- style.css
+    |-- src_babel
+    |   |-- index.js
+    |-- src_code_splitting
+    |   |-- index.js
+    |-- src_css
+    |   |-- index.js
+    |   |-- style.css
+    |   |-- style1.css
+    |-- src_devserver
+    |   |-- home.js
+    |   |-- index.js
+    |   |-- list.js
+    |-- src_font
+    |   |-- index.js
+    |   |-- index.scss
+    |   |-- font
+    |       |-- iconfont.eot
+    |       |-- iconfont.svg
+    |       |-- iconfont.ttf
+    |       |-- iconfont.woff
+    |-- src_lazy
+    |   |-- index.js
+    |-- src_pwa
+    |   |-- index.js
+    |-- src_react
+    |   |-- index.js
+    |-- src_shimming
+    |   |-- index.js
+    |   |-- jquery.ui.js
+    |-- src_splitChunks
+    |   |-- index.js
+    |   |-- test.js
+    |-- src_tree
+        |-- index.js
+        |-- math.js
+
+### 初识webpack
+ + webpack is a module bundler.    
+ + webpack核心定义是一个模块打包工具。   
+ + webpack module：ES Module、CommonJS、CMD、AMD 
 
 <!--more-->
-#### 搭建webpack环境
-> +  webpack本质上是由node实现的。 
-> + 不推荐全局安装webpack   
-> + 查看所有的webpack历史版本：`npm view webpack versions`    
-> +  查看最新webpack版本：`npm view webpack version `  
-> + 本地项目安装完成后，查看webpack的版本：`npx  webpack -v`    
-> + 加入本地全局安装了webpack，想看webpack安装目录：`npm ls webpack -g` 
+### 搭建webpack环境
++  webpack本质上是由node实现的。 
++ 不推荐全局安装webpack   
++ 查看所有的webpack历史版本：`npm view webpack versions`    
++ 查看最新webpack版本：`npm view webpack version `  
++ 本地项目安装完成后，查看webpack的版本：`npx  webpack -v`    
++ 假如本地全局安装了webpack，想看webpack安装目录：`npm ls webpack -g` 
 
-#### webpack的配置
-> + mode:production(代码压缩),development(代码未压缩)
-> + entry:打包进入文件  
-> + output: 打包输出路径  
-> + 以某文件为配置文件打包：npx webpack --config webpackconfig.js 
-> + loader是什么：打包方案(对于特定文件的打包处理:比如file-loader可以对图片、字体等静态资源文件进行打包) ,loader的执行顺序是由下往上，由左至右。   
-> + module:一些loader规则（比如使用file-loader的时候，想让图片的打包名字不改变，可以在module的rules中配置use属性的options属性）   
-> + plugins:  
-> > + html-webpack-plugin:会在打包结束后自动生成一个html文件，并把打包生成的js自动引入到这个html文件中。 
->> + plugin可以在webpack运行到某个时刻的时候，帮你做一些事情   类似与vue中的生命周期函数。 
->> + clean-webpack-plugin:打包生成dist目录下的覆盖(1.0版本可以正常打包，3.0报错)。
+### webpack的配置
+ + mode:production(代码压缩),development(代码未压缩)
+ + entry:打包进入文件  
+ + output: 打包输出路径  
+ + 以某文件为配置文件打包：npx webpack --config webpackConfig.js 
+ + loader是什么：打包方案(对于特定文件的打包处理:比如file-loader可以对图片、字体等静态资源文件进行打包) ,loader的执行顺序是由下往上，由左至右。   
+ + 常用文件loader：file-loader、url-loader
+ + 常用样式loader：postcss-loader(autoprefixer)、sass-loader、css-loader、style-loader
+ + module:一些loader规则（比如使用file-loader的时候，想让图片的打包名字不改变，可以在module的rules中配置use属性的options属性）   
+ + plugins: 可以在webpack运行到某个时刻的时候，帮你做一些事情   类似与vue中的生命周期函数。 
+> + html-webpack-plugin:会在打包结束后自动生成一个html文件，并把打包生成的js自动引入到这个html文件中。 
+> + clean-webpack-plugin:打包生成dist目录下的覆盖(1.0版本可以正常打包，3.0报错)。
 
-#### sourceMap的配置
-> + 项目打包后，如果关闭sourceMap的配置，在浏览器打开项目后，看到的js代码为打包后的代码，不利于查找代码错误。 
-> + sourceMap是一个映射关系，他可以知道在dist打包后的main.js错误的代码对应在未经打包的代码的位置。  
-> + 配置项为：devtool:'source-map'---会在dist目录下生成一个.map的映射文件。如果为'inline-source-map'，则不会生成.map文件，直接在原main.js文见中添加注释以映射(位置在底部)。如果为''cheap-inline-source-map' :与inline不同，只告诉是哪行代码出错，效率会高一些。如果为"cheap-module-source-map':不管是业务代码，但是依赖的第三方模块，都会显示出出错的地方。eval是打包效率最高的方式。如果是开发环境，建议使用“cheap-module-eval-source-map'这种方式。如果是开发环境，一般不用设置devtool的配置。如果要配置，推荐使用"cheap-module-source-map"。
+### 打包出的资源CDN
+打包出的资源js,css等一般为本地静态文件，但我们需要将这些文件放到CDN中，然后在打包出的index.html引用，我们可以这么做： 
+- 在output中配置，publicPath:'https://cdn.com'
 
-#### 使用WebpackDevServer提升开发效率
->  要实现的效果是修改了一个index.js文件中的代码，可以不用重新打包，直接去运行index.html的文件。要实现这种效果有三种方法： 
-> + 1. 在 package.json文件中给script命令加一个 --watch的参数。当加入watch参数后，会监听文件，如果源文件代码修改，会实时的更新打包。 
-> + 2. webpack-dev-server（webpack不自带，需要安装的）:第一次运行脚本的时候，自动打包、打开浏览器、热更新等功能。此外隐藏的一个功能是将dist打包保存至电脑内存。  
-> + 3. 在node中直接使用webpack：通过expres与webpack-dev-middleware手写一个server.js。
 
-#### [HMR] hot Module Replacement(热模块替换)
+### sourceMap的配置
++ 项目打包后，如果关闭sourceMap的配置，在浏览器打开项目后，看到的js代码为打包后的代码，不利于查找代码错误。 
++ sourceMap是一个映射关系，他可以知道在dist打包后的main.js错误的代码对应在未经打包的代码的位置。  
++ 配置项为：  
+> + devtool:'source-map'---会在dist目录下生成一个.map的映射文件。 
+> + 如果为'inline-source-map'，则不会生成.map文件，直接在原main.js文见中添加注释以映射(位置在底部)。  
+> + 如果为'cheap-inline-source-map' :与inline不同，只告诉是哪行代码出错，效率会高一些。 
+> + 如果为"cheap-module-source-map':不管是业务代码，但是依赖的第三方模块，都会显示出出错的地方。  
+> + eval是打包效率最高的方式。  
+如果是开发环境，建议使用“cheap-module-eval-source-map'这种方式。如果是生产环境，一般不用设置devtool的配置。如果要配置，推荐使用"cheap-module-source-map"。
+
+### 使用WebpackDevServer提升开发效率
+ 需要依赖的包为：webpack-dev-devserver -D 
+ 配置项说明：
+ ```
+devServer{
+  contentBase:'./dist',    // 要监听的文件目录
+  open:true,               // 自动打开浏览器窗口
+  port:8000,               // 设置监听端口
+  hot:true,                // 开启热更新
+  proxy:{},                // 代理设置
+}
+ ```
+ 要实现的效果是修改了一个index.js文件中的代码，可以不用重新打包，直接去运行index.html的文件。要实现这种效果有三种方法： 
+1. 在 package.json文件中给script命令加一个 --watch的参数。当加入watch参数后，会监听文件，如果源文件代码修改，会实时的更新打包。 
+2. webpack-dev-server（webpack不自带，需要安装的）:第一次运行脚本的时候，自动打包、打开浏览器、热更新等功能。此外隐藏的一个功能是将dist打包保存至电脑内存。  
+3. 在node中直接使用webpack：通过express与webpack-dev-middleware手写一个server.js。
+
+
+### [HMR] hot Module Replacement(热模块替换)
 > 场景：js动作添加一些模块后，如果修改css文件，webpack会将之前的行为给删除，HMR就是解决只修改css在，不更改行为的。
 
-#### 使用Babel处理ES6语法
+### 使用Babel处理ES6语法
 > + 安装第三方依赖：'babel-loader'、'@babel/core'：babel-loader只是webpack与babel的一个沟通桥梁，并不会将ES6代码转化为ES5代码。 
 > + 继续安装@babel/preset-env，用于将ES6代码转为ES5代码。 
 > + 配置webpack.config.js。 
@@ -55,7 +144,7 @@
       }      
 ```
 
-#### Tree Shaking
+### Tree Shaking
 > + Tree Shaking在webpack2.0之后引入。  
 > + 在math.js这个模块中有两个方法add 和minu，在index中只调用add方法，去打包的时候，会将math中的两个方法均打包，这样做是没有必要，且会使得打包文件变大，Tree Shaking就是为了解决这个问题的。     
 > + Tree Shaking只支持ES Module(即import这种模块引入，require这种的不支持)。 
@@ -72,7 +161,7 @@
 > +  使用webpack打包会发现生成一个.map的映射文件，且打包文件被压缩，注释去掉、minu有关的代码也剔除掉了。    
 
 
-#### Development和Production模式的区分打包
+### Development和Production模式的区分打包
 >  通过前面的学习，我们知道在开发环境与生产环境下，打包方式是有区别。 
 >  为了提高在不同开发模式下进行打包的效率，我们分别新建两个文件:webpack.dev.js和webpack.prod.js。这两个文件分别代码不同环境下的webpack配置。     
 > 然后在package.json文件中的script标签页配置两个命令即可：  
@@ -84,7 +173,7 @@
 > 这个时候分别将dev/pro的文件与base文件进行合并输出配置：需要安装第三方模块：`webpack-merge` (此文默认安装的时候最新版本是5.0.8,使用merge报错，然后回退使用4.2.2版本)   
 > 最后分别在dev和prod中引入webpack-merge,通过`module.exports = merge(baseConfig, fileConfig)`即可。  
 
-#### webpack和Code Splitting(代码分割)
+### webpack和Code Splitting(代码分割)
 > 代码分割与webpack无关。
 > + 这里的代码分割是指对代码进行分割，提高代码执行效率与性能。    
 
@@ -96,21 +185,21 @@
 > + 第一种同步代码：在webpack.base.js中配置 optimization:{splitChunks:{chunks:'all'}},此时在开发环境下打包，会看到有一个新的打包文件：vendors~main.js.    
 > + 第二种异步代码：异步加载第三方资源(import异步引入)，无需做任何配置，webpack会自动帮我们进行代码的分割。
 
-#### Lazy Loading懒加载，Chunk是什么？
+### Lazy Loading懒加载，Chunk是什么？
 > 懒加载是通过import异步加载一个模块，在执行的时候，再去引入。  
 > 路由懒加载等提升页面加载效率。  
 > 业务代码引入第三方资源的懒加载可以通过async、await。    
 
 > chunk指的是整个项目完成打包后，dist下面有几个js文件就是指几个chunk。
 
-#### CSS文件的代码分割
+### CSS文件的代码分割
 > webpack配置文件中的output有两个属性：fileName和chunkFilename，这两个的区别是：  
 > 
 > CSS文件代码分割要使用在生产环境中。   
 > 需要安装`mini-css-extract-plugin`插件。 
 > 使用`optimize-css-assets-webpack-plugin`这个插件可以对代码进行合并和压缩。
 
-#### shimming
+### shimming
 > 代码或者打包过程的兼容性问题。    
 >
 > webpack自带一个webpack.procidePlugin({})插件--垫片。    
@@ -118,50 +207,50 @@
 > 如果想让每一个js文件的this指向window，安装`imports-loader`。  
 > 对webpack.base.js做一些配置。
 
-#### Library打包
+### Library打包
 > 自己发布一个npm包，在配置好自己的项目包之后，在npm官方注册账号，npm login登录，npm publish即可
 
-#### Progessive Web Application - PWA
+### Progessive Web Application - PWA
 > +  安装第三方插件：workbox-webpack-plugin。   
 > + 线上打包配置文件：添加plugin：new WorkboxPlugin.GenerateSW()。   
 > + 在业务代码中，应该serverWorker，就可以将页面缓存住了。  
 
-#### TypaScript的打包配置
+### TypaScript的打包配置
 >  总结至：https://github.com/liugezhou/typescript_webpack
 
-#### 使用WebpackDevServer实现请求转发
+### 使用WebpackDevServer实现请求转发
 > 本节主要是对webpack的配置devServer属性中的proxy做了一个讲解，没啥内容。
 
-#### WebpackDevServer解决单页面应用路由问题
+### WebpackDevServer解决单页面应用路由问题
 > devServer:historyApiFallback: true
 
-#### Eslint在Webpack中的配置
+### Eslint在Webpack中的配置
 > + npm i eslint -D   
 > + npx eslint --init   
 > + npm i babel-eslint -D
 
-#### 提升Webpack打包速度的方法
+### 提升Webpack打包速度的方法
 > 1. 跟上技术的迭代：Npde、Npm、Yarn  
 > 2. 在尽可能少的模块上应用Loader (合理使用exclude和include)    
 > 3.  Plugin尽可能精简少用并确保可靠
 > 4.  resolve参数合理配置(如果想引入默认为js或者jsx的文件，在webpack配置文件中加`resolve:{extensions:['.js','jsx']}`)
 
-#### 如何编写一个loader
+### 如何编写一个loader
 > 借助loader处理引用的文件。    
 > [demo仓库源码](https://github.com/liugezhou/make-loader)
 
-#### 如何编写一个Plugin
+### 如何编写一个Plugin
 > 在打包的某个具体时刻做的操作(比如打包钱清空dist目录，打包完成的html自动生成等)      
 > [demo仓库源码](https://github.com/liugezhou/make-plugin)
 
-#### Bundler源码编写(模块分析)
+### Bundler源码编写(模块分析)
 > [demo仓库源码](https://github.com/liugezhou/make-bundle)
 
-#### 通过CreateReactApp深入学习Webpack配置
+### 通过CreateReactApp深入学习Webpack配置
 
-#### 通过VueCli3学习webpack配置
+### 通过VueCli3学习webpack配置
 
-#### [常用的webpack插件](https://mp.weixin.qq.com/s/FPENfKo7mObEYcVP0wofRA)
+### [常用的webpack插件](https://mp.weixin.qq.com/s/FPENfKo7mObEYcVP0wofRA)
 > + HotModuleReplacementPlugin:模块热更新插件(webpack自带)。   
 > + html-webpack-plugin:生成html文件。  
 > + clean-webpack-plugin:打包前清理上一次项目生成的bundle文件。 

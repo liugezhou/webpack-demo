@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: {
-    main: './src_pwa/index.js'
+    main: './src/index.js'
   },
   module: {
     rules: [
@@ -44,7 +44,7 @@ module.exports = {
     })
   ],
   optimization:{
-    runtiomeChunk:{
+    runtimeChunk:{
       name:'runtime'
     },
     usedExports:true,  //tree-shading使用
