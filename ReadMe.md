@@ -8,7 +8,7 @@
 > +  webpack本质上是由node实现的。 
 > + 不推荐全局安装webpack   
 > + 查看所有的webpack历史版本：`npm view webpack versions`    
-> +  查看最新webpacxk版本：`npm view webpack version `  
+> +  查看最新webpack版本：`npm view webpack version `  
 > + 本地项目安装完成后，查看webpack的版本：`npx  webpack -v`    
 > + 加入本地全局安装了webpack，想看webpack安装目录：`npm ls webpack -g` 
 
