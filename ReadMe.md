@@ -1,16 +1,17 @@
 ### 目录结构
+```
 |-- CoolProject
     |-- .babelrc                    
-    |-- .eslintrc.js
-    |-- .gitignore ----------------------- 忽略提交文件 
-    |-- index.html ----------------------- htmlWebpackPlugin使用
-    |-- package-lock.json ---------------- 版本固定
-    |-- package.json --------------------- 项目配置、依赖
+    |-- .eslintrc.js  
+    |-- .gitignore ----------------------- 忽略提交文件   
+    |-- index.html ----------------------- htmlWebpackPlugin使用  
+    |-- package-lock.json ---------------- 版本固定 
+    |-- package.json --------------------- 项目配置、依赖 
     |-- postcss.config.js ----------------- postcss配置，依赖autoprefixer
-    |-- readme.md ------------------------ 说明文档、知识点总结 
-    |-- server.js ------------------------- 手写devServer
-    |-- build
-    |   |-- webpack.base.js
+    |-- readme.md ------------------------ 说明文档、知识点总结   
+    |-- server.js ------------------------- 手写devServer 
+    |-- build 
+    |   |-- webpack.base.js 
     |   |-- webpack.config.js --------------- 只是server.js使用的配置文件 
     |   |-- webpack.dev.js ----------------  本地项目启动依赖配置
     |   |-- webpack.devserver.js ----------- devServer配置文件测试(未引用)
@@ -62,7 +63,7 @@
     |-- src_tree
         |-- index.js
         |-- math.js
-
+```
 ### 初识webpack
  + webpack is a module bundler.    
  + webpack核心定义是一个模块打包工具。   
