@@ -1,7 +1,7 @@
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require("webpack-dev-middleware")
-const config = require('./webpack.config.js')
+const config = require('./build/webpack.dev.js')
 // 在node中使用webpack ：webpack传入config进行编译，返回一个编译器
 const compiler = webpack(config);
 

@@ -12,10 +12,8 @@
   |-- readme.md ------------------------ 说明文档、知识点总结
   |-- server.js ------------------------- 手写devServer
   |-- build
-  |   |-- webpack.base.js
-  |   |-- webpack.config.js --------------- 只是server.js使用的配置文件
+  |   |-- webpack.base.js ---------------- dev与prod共用配置 
   |   |-- webpack.dev.js ----------------  本地项目启动依赖配置
-  |   |-- webpack.devserver.js ----------- devServer配置文件测试(未引用)
   |   |-- webpack.prod.js  --------------- 本地项目打包依赖配置--生产打包配置不一致
   |-- src -------------------------------- 测试打包png scss font(loader使用)
   |   |-- createAvatar.js
@@ -260,7 +258,7 @@ if(module.hot){
 这个时候分别将 dev/pro 的文件与 base 文件进行合并输出配置：需要安装第三方模块：`webpack-merge` (此文默认安装的时候最新版本是 5.0.8,使用 merge 报错，然后回退使用 4.2.2 版本)  
 最后分别在 dev 和 prod 中引入 webpack-merge,通过`module.exports = merge(baseConfig, fileConfig)`即可。
 
-### webpack 和 Code Splitting(代码分割)
+### webpack 和 Code Splitting(src_split)
 
 代码分割与 webpack 无关。
  
@@ -273,8 +271,8 @@ Demo:
 
 webpack4 可以自动的帮我们做代码分割：
  
-- 第一种同步代码：在 webpack.base.js 中配置 optimization:{splitChunks:{chunks:'all'}},此时在开发环境下打包，会看到有一个新的打包文件：vendors~main.js.
-- 第二种异步代码：异步加载第三方资源(import 异步引入)，无需做任何配置，webpack 会自动帮我们进行代码的分割。
+- 第一种同步代码做代码分割：在 webpack.base.js 中配置 optimization:{splitChunks:{chunks:'all'} },此时在开发环境下打包，会看到有一个新的打包文件：vendors~main.js.
+- 第二种异步代码做代码分割：异步加载第三方资源(import 异步引入)，无需做任何配置，webpack 会自动帮我们进行代码的分割。
 
 ### Lazy Loading 懒加载，Chunk 是什么？
 
@@ -296,7 +294,7 @@ CSS 文件代码分割要使用在生产环境中。
 
  代码或者打包过程的兼容性问题。
 
- webpack 自带一个 webpack.procidePlugin({})插件--垫片。
+ webpack 自带一个 webpack.providePlugin({})插件--垫片。
 
  如果想让每一个 js 文件的 this 指向 window，安装`imports-loader`。  
  对 webpack.base.js 做一些配置。
