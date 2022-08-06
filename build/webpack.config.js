@@ -87,6 +87,7 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     new webpack.HotModuleReplacementPlugin(),
   ],
+  // TreeShaking使用--生产环境已经自配置好，不用写
   // optimization:{
   //   usedExports:true
   // },

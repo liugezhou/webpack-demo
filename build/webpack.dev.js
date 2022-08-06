@@ -42,7 +42,7 @@ const devConfig = {
     new webpack.HotModuleReplacementPlugin()
   ],
   optimization:{
-    usedExports:true  //tree-shading使用
+    usedExports:true  //tree-shaking  development使用
   },
 }
 module.exports = merge(baseConfig, devConfig);
