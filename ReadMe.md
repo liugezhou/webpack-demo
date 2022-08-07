@@ -274,7 +274,7 @@ webpack4 可以自动的帮我们做代码分割：
 - 第一种同步代码做代码分割：在 webpack.base.js 中配置 optimization:{splitChunks:{chunks:'all'} },此时在开发环境下打包，会看到有一个新的打包文件：vendors~main.js.
 - 第二种异步代码做代码分割：异步加载第三方资源(import 异步引入)，无需做任何配置，webpack 会自动帮我们进行代码的分割。
 
-### Lazy Loading 懒加载，Chunk 是什么？
+### Lazy Loading 懒加载，Chunk 是什么？(src_lazy)
 
 懒加载是通过 import 异步加载一个模块，在执行的时候，再去引入。  
 路由懒加载等提升页面加载效率。  
@@ -284,11 +284,14 @@ webpack4 可以自动的帮我们做代码分割：
 
 ### CSS 文件的代码分割
 
-webpack 配置文件中的 output 有两个属性：fileName 和 chunkFilename，这两个的区别是：
+webpack 配置文件中的 output 有两个属性：fileName 和 chunkFilename，这两个的区别是： 
+- webpack配置中入口文件，打包出来的命名根据output的fileName配置 ，在index.html引入   
+- 如果是间接模块的js引入，则走chunkFileName这个配置
 
-CSS 文件代码分割要使用在生产环境中。  
-需要安装`mini-css-extract-plugin`插件。
-使用`optimize-css-assets-webpack-plugin`这个插件可以对代码进行合并和压缩。
+CSS 文件代码分割要使用在生产环境中    
+在测试环境下，`(src-css)`我们看到并没有讲css文件单独打一个包，如果我们需要讲css文件也单独打一个包，那么： 
+- 需要安装`mini-css-extract-plugin`插件。
+- 使用`optimize-css-assets-webpack-plugin`这个插件可以对代码进行合并和压缩。
 
 ### shimming
 

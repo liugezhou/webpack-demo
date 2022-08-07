@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 module.exports = {
   entry: {
-    main: './src_split/index.js',
+    main: './src_css/index.js',
   },
   module: {
     rules: [
@@ -61,12 +61,12 @@ module.exports = {
     }),
   ],
   optimization: {
-    runtimeChunk: {
-      name: 'runtime',
-    },
+    // runtimeChunk: {
+    //   name: 'runtime',
+    // },
     splitChunks: {
-      chunks: 'all',
-      minSize: 30000,
+      chunks: 'all', // 默认为async
+      minSize: 20000,
       maxSize: 0,
       minChunks: 1,// 只要用了1次的引入就开启代码分割
       maxAsyncRequests: 5,
@@ -75,9 +75,9 @@ module.exports = {
       name: true,
       cacheGroups: { // 分割出来的代码到底要分割在哪里去，在这里设置
         vendors: {
-          test: /[\\.]node_modules[\\/]/,
+          test: /[\\/]node_modules[\\/]/,
           priority: -10, // 优先级，如果都符合这俩规则，此值大的就打包到这里
-          filename: 'vendors.js',
+          // filename: 'vendors.js',
         },
         default: {
           priority: -20,
@@ -88,8 +88,8 @@ module.exports = {
     },
   },
   output: {
-    publicPath: '/', //静态资源CDN使用
-    filename: '[name].js',
+    // publicPath: '/', //静态资源CDN使用
+    filename: '[name].js', 
     chunkFilename: '[name].chunk.js',
     path: path.resolve(__dirname, '../dist'),
   },
