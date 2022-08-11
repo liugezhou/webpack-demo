@@ -293,18 +293,37 @@ CSS 文件代码分割要使用在生产环境中
 - 需要安装`mini-css-extract-plugin`插件。
 - 使用`optimize-css-assets-webpack-plugin`这个插件可以对代码进行合并和压缩。
 
-### shimming
+### shimming(src_shimming)
+根据代码可知，如果在jquery.ui.js中不引入jquery，那么项目在启动后会报错。  
+这个jquery由于是第三方包，所以不想在所有的页面中为了使用这个`$`而都引入jquery，于是我们可以这么做： 
+在webpack.base.js中
+```
+const webpack = require('webpack')
+// 在plugin配置中：
+new webpack.ProvidePlugin({
+  $:'jquery'   //如果一个模块中使用了$这个符号，就会在模块中自动引入jquery这个库
+})
+```
+这个时候将jquery.ui.js中的第一行注释，重新启动，发现代码运行正常。  
+这里遗留一个小问题是:在jquery.ui.js中使用了lodash，但是在ProvidePlugin中没有配置lodash，但是却能够打印。  
 
- 代码或者打包过程的兼容性问题。
-
- webpack 自带一个 webpack.providePlugin({})插件--垫片。
-
- 如果想让每一个 js 文件的 this 指向 window，安装`imports-loader`。  
- 对 webpack.base.js 做一些配置。
+### 环境变量的使用(src_env)
+1. 将build中三个配置文件copy至src_env 
+2. 将这三个配置文件分别进行更改，只在webpack.base.js中导出，且传入一个env对象 
+3. 在package.json中将scripts的dev修改为如下(代码中未做变更，这里只是说明)  
+```
+ "dev": "webpack-dev-server --config ./build/webpack.base.js", 
+ "dev-build": "webpack  --config ./build/webpack.base.js", 
+``` 
+4. 如果为build命令，需要添加一个参数
+```
+ " build": "webpack  --env.production --config ./build/webpack.base.js", 
+```
+（未对以上代码进行测试）
 
 ### Library 打包
 
-> 自己发布一个 npm 包，在配置好自己的项目包之后，在 npm 官方注册账号，npm login 登录，npm publish 即可
+自己发布一个 npm 包，在配置好自己的项目包之后，在 npm 官方注册账号，npm login 登录，npm publish 即可
 
 ### Progessive Web Application - PWA
 
